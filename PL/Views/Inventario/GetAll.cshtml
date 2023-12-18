@@ -1,0 +1,61 @@
+﻿@model ML.Inventario
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Inventario de todas las tiendas</h2>
+<hr />
+<div>
+    <label>Selecciona un producto para consultar la existencia</label><br />
+    <form method="post" action="@Url.Action("GetAll","Inventario")">
+        <select name="idProducto" class="form-control">
+            <option value="0">Todos</option>
+            @foreach (ML.Producto producto in Model.Pruducto.Productos)
+            {
+                <option value="@producto.IdProducto">@producto.Nombre</option>
+            }
+        </select>
+        <button class="btn btn-success" type="submit">Consultar</button>
+    </form>
+</div>
+<hr />
+<div>
+    @if (Model.Inventarios != null)
+    {
+        if (Model.Inventarios.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Tienda</th>
+                        <th>Dirección</th>
+                        <th>Telefono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(ML.Inventario inventario in Model.Inventarios)
+                    {
+                        <tr>
+                            <td>@inventario.Pruducto.Nombre</td>
+                            <td>$ @inventario.Pruducto.Precio</td>
+                            <td>@inventario.Stock</td>
+                            <td>@inventario.Sucursal.Nombre</td>
+                            <td>@inventario.Sucursal.Direccion</td>
+                            <td>@inventario.Sucursal.Telefono</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                Sin existencias de productos en las sucursales.
+            </div>
+        }
+    }
+</div>

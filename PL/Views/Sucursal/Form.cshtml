@@ -1,0 +1,32 @@
+﻿@model ML.Sucursal
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Formulario de sucursal</h2>
+<hr />
+<div>
+    @using (Html.BeginForm("Form", "Sucursal", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdSucursal)
+        <div class="row mb-3">
+            <div class="col col-4">
+                <label>Nombre</label>
+                @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @placeholder = "Nombre" })
+            </div>
+            <div class="col col-4">
+                <label>Dirección</label>
+                @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control", @placeholder = "Dirección" })
+            </div>
+            <div class="col col-4">
+                <label>Telefono</label>
+                @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @placeholder = "Telefono" })
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-danger" href="@Url.Action("GetAll","Sucursal")">Volver</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    }
+</div>

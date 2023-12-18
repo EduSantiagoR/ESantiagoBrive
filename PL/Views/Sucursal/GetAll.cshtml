@@ -1,0 +1,65 @@
+﻿@model ML.Sucursal
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Sucursales existentes</h2>
+<hr />
+<div>
+    <a class="btn btn-success" href="@Url.Action("Form","Sucursal")">Agregar</a>
+</div>
+<hr />
+<div>
+    @if (Model.Sucursales != null)
+    {
+        if (Model.Sucursales.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>Inventario</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Telefono</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Sucursal sucursal in Model.Sucursales)
+                    {
+                        <tr>
+                            <td>
+                                <a class="btn btn-warning" href="@Url.Action("Form","Sucursal", new {idSucursal = sucursal.IdSucursal})">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a class="btn btn-info" href="@Url.Action("GetProductosAsignados", "Inventario", new {idSucursal = sucursal.IdSucursal})">
+                                    <i class="fa-solid fa-warehouse"></i>
+                                </a>
+                            </td>
+                            <td>@sucursal.Nombre</td>
+                            <td>@sucursal.Direccion</td>
+                            <td>@sucursal.Telefono</td>
+                            <td>
+                                <a class="btn btn-danger"
+                                   href="@Url.Action("Delete", "Sucursal", new {idSucursal = sucursal.IdSucursal})"
+                                   onclick="return confirm('¿Estas seguro de querer eliminar la sucursal?')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No tienes sucursales registradas.
+            </div>
+        }
+    }
+</div>

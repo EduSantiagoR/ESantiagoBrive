@@ -1,0 +1,84 @@
+﻿@model ML.Inventario
+@{
+    ViewBag.Title = "GetProductosNoAsignados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Productos no asignados</h2>
+<hr />
+
+<div>
+    @if (Model.Pruducto.Productos != null)
+    {
+        if (Model.Pruducto.Productos.Count > 0)
+        {
+            <p>Selecciona el producto y la cantidad de cada producto que quieras asignar.</p><br />
+            <form method="post" action="@Url.Action("GetProductosNoAsignados","Inventario")">
+                <table class="table table-dark table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Asignar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Producto producto in Model.Pruducto.Productos)
+                        {
+                            <tr>
+                                <td>@producto.Nombre</td>
+                                <td>@producto.Precio</td>
+                                <td id="@producto.IdProducto.ToString()" align="center">
+                                </td>
+                                <td>
+                                    <input onchange="HabilitarStockInput('@producto.IdProducto.ToString()', this)" name="productos[]" value="@producto.IdProducto" type="checkbox" class="form-check-input" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    <a class="btn btn-danger"
+                       href="@Url.Action("GetProductosAsignados", "Inventario", new {idSucursal = int.Parse(Session["IdSucursal"].ToString())})">
+                        Volver
+                    </a>
+                    <button class="btn btn-success" type="submit">Guardar</button>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                Ya has asignado todos los productos existentes a esta tienda.
+            </div>
+            <div>
+                <a class="btn btn-danger"
+                   href="@Url.Action("GetProductosAsignados", "Inventario", new {idSucursal = int.Parse(Session["IdSucursal"].ToString())})">
+                    Volver
+                </a>
+            </div>
+        }
+
+    }
+</div>
+
+<script type="text/javascript">
+    function HabilitarStockInput(id, e) {
+        if (e.checked != 0) {
+            var nuevoInput = document.createElement('input');
+            nuevoInput.id = 'input' + id;
+            nuevoInput.name = 'stocks[]';
+            nuevoInput.className = 'form-control';
+            nuevoInput.placeholder = '0';
+            nuevoInput.style.width = '50px';
+            nuevoInput.style.height = '20px';
+            nuevoInput.value = 0;
+            document.getElementById(id).appendChild(nuevoInput);
+        }
+        else {
+            var input = document.getElementById('input' + id);
+            document.getElementById(id).removeChild(input);
+        }
+    }
+</script>

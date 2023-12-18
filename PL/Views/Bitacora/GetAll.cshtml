@@ -1,0 +1,56 @@
+﻿@model ML.Bitacora
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Bitacora de movimientos</h2>
+<hr />
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+
+<div>
+    @if (Model.Registros != null)
+    {
+        if (Model.Registros.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center" id="tableBitacora">
+                <thead>
+                    <tr>
+                        <th class="text-center">Realizado por</th>
+                        <th class="text-center">Fecha y hora</th>
+                        <th class="text-center">Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Bitacora movimiento in Model.Registros)
+                    {
+                        <tr>
+                            <td>@movimiento.Usuario.Username</td>
+                            <td>@movimiento.FechaMovimiento</td>
+                            <td>@movimiento.Descripcion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No hay movimientos registrados.
+            </div>
+        }
+    }
+</div>
+<script type="text/javascript">
+    let table = new DataTable('#tableBitacora', {
+        reponsive: true,
+        "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+        searching: false,
+        language: {
+            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+        }
+    });
+</script>

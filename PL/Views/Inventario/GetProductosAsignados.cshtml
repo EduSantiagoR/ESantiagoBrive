@@ -1,0 +1,92 @@
+﻿@model ML.Inventario
+@{
+    ViewBag.Title = "GetProductosAsignados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Productos asignados</h2>
+<hr />
+<div>
+    <a class="btn btn-danger" href="@Url.Action("GetAll","Sucursal")">Volver</a>
+    <a class="btn btn-success" href="@Url.Action("GetProductosNoAsignados", "Inventario")">Asignar productos</a>
+</div>
+<hr />
+<div>
+    @if (Model.Inventarios != null)
+    {
+        if (Model.Inventarios.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Modificar stock</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Inventario producto in Model.Inventarios)
+                    {
+                        <tr>
+                            <td>@producto.Pruducto.Nombre</td>
+                            <td>@producto.Pruducto.Precio</td>
+                            <td>@producto.Stock</td>
+                            <td>
+                                <!-- Button trigger modal -->
+                                <button onclick="ActualizarModal(@producto.Pruducto.IdProducto)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                    <i class="fa-solid fa-wrench"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <a class="btn btn-danger"
+                                   href="@Url.Action("Delete", "Inventario", new {idProducto = producto.Pruducto.IdProducto})"
+                                   onclick="return confirm('¿Seguro que quieres eliminar el producto de esta tienda?')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No tienes productos asignados para esta tienda. Puedes empezar a asignar productos existentes.
+            </div>
+        }
+    }
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="color:black">Modificar stock</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="@Url.Action("UpdateStock","Inventario")">
+                <div class="modal-body">
+                    <label style="color:black">¿Cuánto stock deseas tener?</label><br />
+                    
+                    <input hidden id="txtIdProducto" name="idProducto" />
+                    <input class="form-control" placeholder="0" name="cantidad" required />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ActualizarModal(idProducto) {
+        document.getElementById('txtIdProducto').value = idProducto;
+    }
+</script>

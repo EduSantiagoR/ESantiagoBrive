@@ -1,0 +1,28 @@
+﻿@model ML.Inventario
+@{
+    ViewBag.Title = "FormUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Actualiza el producto</h2>
+<hr />
+<div>
+    @using (Html.BeginForm("FormUpdate", "Producto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model=>model.Pruducto.IdProducto)
+        <div class="row mb-3">
+            <div class="col col-4">
+                <label>Nombre</label>
+                @Html.TextBoxFor(model => model.Pruducto.Nombre, new { @class="form-control" })
+            </div>
+            <div class="col col-4">
+                <label>Precio</label>
+                @Html.TextBoxFor(model => model.Pruducto.Precio, new { @class="form-control"})
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-danger" href="@Url.Action("GetAll", "Producto")">Volver</a>
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </div>
+    }
+</div>

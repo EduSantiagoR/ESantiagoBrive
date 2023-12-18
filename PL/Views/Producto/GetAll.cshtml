@@ -1,0 +1,52 @@
+﻿@model ML.Producto
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Productos existentes</h2>
+<hr />
+<div>
+    <a class="btn btn-success" href="@Url.Action("FormAdd","Producto")">Agregar</a>
+</div>
+<hr />
+<div>
+    @if (Model.Productos != null)
+    {
+        if (Model.Productos.Count > 0)
+        {
+            <table class="table table-dark table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(ML.Producto producto in Model.Productos)
+                    {
+                        <tr>
+                            <td><a class="btn btn-warning" href="@Url.Action("FormUpdate","Producto", new {idProducto = producto.IdProducto})"><i class="fa-solid fa-square-pen"></i></a></td>
+                            <td>@producto.Nombre</td>
+                            <td>$ @producto.Precio</td>
+                            <td><a class="btn btn-danger" 
+                                   onclick="return confirm('¿Seguro que quieres eliminar el producto? Se eliminará de todas las tiendas que lo ofrezcan.')"
+                                   href="@Url.Action("Delete","Producto", new {idProducto = producto.IdProducto})">
+                                <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div role="alert" class="alert alert-warning">
+                No tienes productos registrados.
+            </div>
+        }
+    }
+</div>

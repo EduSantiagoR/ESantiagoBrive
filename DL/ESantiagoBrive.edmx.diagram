@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57a431c59f354c5e8ed109d359dda4df" Name="Diagram1">
+        <EntityTypeShape EntityType="ESantiagoBriveModel.Usuario" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ESantiagoBriveModel.Bitacora" Width="1.5" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="ESantiagoBriveModel.Inventario" Width="1.5" PointX="5.625" PointY="0.875" />
+        <EntityTypeShape EntityType="ESantiagoBriveModel.Producto" Width="1.5" PointX="3.375" PointY="4" />
+        <EntityTypeShape EntityType="ESantiagoBriveModel.Sucursal" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="ESantiagoBriveModel.FK__Bitacora__IdUsua__173876EA" />
+        <AssociationConnector Association="ESantiagoBriveModel.FK__Inventari__IdPro__37A5467C" />
+        <AssociationConnector Association="ESantiagoBriveModel.FK__Inventari__IdSuc__36B12243" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
